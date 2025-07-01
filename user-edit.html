@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Edit</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4 bg-light">
+<div class="container">
+  <h2 class="mb-4">User Form <button class="btn btn-danger float-end" onclick="logout()">Logout</button></h2>
+  <form id="userForm">
+    <input type="text" id="name" placeholder="Name" class="form-control mb-2">
+    <input type="email" id="email" placeholder="Email" class="form-control mb-2">
+    <input type="password" id="password" placeholder="Password" class="form-control mb-2">
+    <select id="role" class="form-select mb-2">
+      <option value="employee">Employee</option>
+      <option value="manager">Manager</option>
+    </select>
+    <button class="btn btn-primary" type="submit">Save</button>
+    <div id="status" class="mt-2 text-danger"></div>
+  </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+const token=localStorage.getItem('api_token'); if(!token)window.location='login.html';
+const params=new URLSearchParams(window.location.search); const id=params.get('id');
+
+function logout(){localStorage.removeItem('api_token');window.location='login.html';}
+
+if(id)$.ajax({url:'/api/users/'+id,headers:{'Authorization':'Bearer '+token},
+  success:res=>{$('#name').val(res.name);$('#email').val(res.email);$('#role').val(res.role)},
+  error:x=>alert(x.responseJSON.message)
+});
+
+$('#userForm').submit(e=>{
+  e.preventDefault();
+  const data={name:$('#name').val(),email:$('#email').val(),password:$('#password').val(),role:$('#role').val()};
+  const url=id?'/api/users/'+id:'/api/users'; const method=id?'PUT':'POST';
+  $.ajax({url,method,headers:{'Authorization':'Bearer '+token},contentType:'application/json',data:JSON.stringify(data),
+    success:()=>window.location='manager.html', error:x=>$('#status').text(x.responseJSON.message)});
+});
+</script>
+</body>
+</html>
