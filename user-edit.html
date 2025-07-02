@@ -22,16 +22,18 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-const token=localStorage.getItem('api_token'); if(!token)window.location='login.html';
+//If no token stored, redirect to login 
+const token=localStorage.getItem('api_token');
+if(!token)window.location='login.html';
 const params=new URLSearchParams(window.location.search); const id=params.get('id');
-
+//Clears the token from localStorage and redirects to login page
 function logout(){localStorage.removeItem('api_token');window.location='login.html';}
-
+//If there is an id in the URL, fetch the user details and prefill the user form for editing
 if(id)$.ajax({url:'/api/users/'+id,headers:{'Authorization':'Bearer '+token},
   success:res=>{$('#name').val(res.name);$('#email').val(res.email);$('#role').val(res.role)},
   error:x=>alert(x.responseJSON.message)
 });
-
+//Collect form data, and send it to the API to create or update a user (POST or PUT), then redirect on success
 $('#userForm').submit(e=>{
   e.preventDefault();
   const data={name:$('#name').val(),email:$('#email').val(),password:$('#password').val(),role:$('#role').val()};

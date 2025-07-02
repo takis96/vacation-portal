@@ -1,6 +1,7 @@
 <?php
 class AuthController
 {
+    //Authenticates a user with email and password, generates a session token, and returns it with the user's role.
     public static function login(): void
     {
         $input = json_decode(file_get_contents('php://input'), true);
@@ -16,6 +17,7 @@ class AuthController
         Response::json(['message' => 'Invalid credentials'], 401);
     }
 
+    //Not really used
     public static function whoami(): void
     {
         $user = AuthController::requireAuth();
@@ -23,6 +25,7 @@ class AuthController
         Response::json($user);
     }
 
+    //Validates the Bearer token from the request and returns the authenticated user or a 401 error if invalid.
     public static function requireAuth(): array
     {
         $headers = getallheaders();

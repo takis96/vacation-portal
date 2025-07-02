@@ -3,6 +3,7 @@ class Database
 {
     private static ?PDO $pdo = null;
 
+    //Returns a PDO database connection
     public static function getInstance(): PDO
     {
         if (!self::$pdo) {

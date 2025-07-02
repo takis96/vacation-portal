@@ -1,6 +1,7 @@
 <?php
 class VacationController
 {
+    //Returs all vacation requests for the authenticated employee as JSON
     public static function index(): void
     {
         $user = AuthController::requireAuth();
@@ -8,6 +9,7 @@ class VacationController
         Response::json(Vacation::allForUser($user['id']));
     }
 
+    //Creates a new vacation request for the authenticated employee
     public static function store(): void
     {
         $user = AuthController::requireAuth();

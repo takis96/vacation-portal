@@ -1,6 +1,7 @@
 <?php
 class UserController
 {
+    //Returns a list of all users as JSON
     public static function index(): void
     {
         $user = AuthController::requireAuth();
@@ -8,6 +9,7 @@ class UserController
         Response::json(User::all());
     }
 
+    //Returns details of a specific user by id
     public static function show($id): void
     {
         $user = AuthController::requireAuth();
@@ -16,6 +18,7 @@ class UserController
         $found ? Response::json($found) : Response::json(['message' => 'User not found'], 404);
     }
 
+    //Creates a new user with all the neccessary values
     public static function store(): void
     {
         $user = AuthController::requireAuth();
@@ -35,6 +38,7 @@ class UserController
         }
     }
 
+    ////Updates a user with the values given
     public static function update($id): void
     {
         $user = AuthController::requireAuth();
@@ -52,6 +56,7 @@ class UserController
         }
     }
 
+    //Deletes a user by id
     public static function destroy($id): void
     {
         $user = AuthController::requireAuth();

@@ -9,6 +9,7 @@ if (php_sapi_name() === 'cli-server') {
 }
 
 require_once 'config.php';
+//Registers an autoloader that automatically includes class files from core, controllers, or models when a class is used.
 spl_autoload_register(function ($class) {
     $paths = [
         __DIR__ . '/core/' . $class . '.php',
@@ -26,20 +27,20 @@ spl_autoload_register(function ($class) {
 
 $router = new Router();
 
-// Public
+//Public
 $router->add('POST', '/api/login', [AuthController::class, 'login']);
 
-// Authenticated user info
+//Authenticated user info
 $router->add('GET', '/api/whoami', [AuthController::class, 'whoami']);
 
-// Manager-only users CRUD
+//Manager-only users CRUD
 $router->add('GET', '/api/users', [UserController::class, 'index']);
 $router->add('GET', '/api/users/{id}', [UserController::class, 'show']);
 $router->add('POST', '/api/users', [UserController::class, 'store']);
 $router->add('PUT', '/api/users/{id}', [UserController::class, 'update']);
 $router->add('DELETE', '/api/users/{id}', [UserController::class, 'destroy']);
 
-// Employee-only vacations CRUD
+//Employee-only vacations CRUD
 $router->add('GET', '/api/vacations', [VacationController::class, 'index']);
 $router->add('POST', '/api/vacations', [VacationController::class, 'store']);
 

@@ -26,6 +26,7 @@ $('#loginBtn').click(() => {
     contentType: 'application/json',
     data: JSON.stringify({ email: $('#email').val(), password: $('#password').val() }),
     success: res => {
+      // Save returned token and redirect based on user role.
       localStorage.setItem('api_token', res.token);
       res.role === 'manager' ? window.location = 'manager.html' : window.location = 'employee.html';
     },

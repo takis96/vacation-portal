@@ -16,8 +16,12 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-const token=localStorage.getItem('api_token');if(!token)window.location='login.html';
+//If no token stored, redirect to login
+const token=localStorage.getItem('api_token');
+if(!token)window.location='login.html';
+//Clears the token from localStorage and redirects to login page
 function logout(){localStorage.removeItem('api_token');window.location='login.html';}
+//Fetches the authenticated employee’s vacation requests and displays them in a table
 function loadVacs(){
   $.ajax({url:'/api/vacations',headers:{'Authorization':'Bearer '+token},
     success:res=>{$('#vacTable').empty();res.forEach(v=>$('#vacTable').append(`<tr><td>${v.date_from}</td><td>${v.date_to}</td><td>${v.reason}</td></tr>`));},
