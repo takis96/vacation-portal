@@ -21,7 +21,7 @@ const token = localStorage.getItem('api_token');
 if (!token) window.location='login.html';
 //Clears the token from localStorage and redirects to login page
 function logout(){ localStorage.removeItem('api_token'); window.location='login.html'; }
-
+//Fetches the list of all users and populates the users table
 function loadUsers(){
   $.ajax({ url:'/api/users', headers:{'Authorization':'Bearer '+token},
     success:res=>{

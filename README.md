@@ -52,7 +52,7 @@ CREATE TABLE users (
 );
 ```
 
-Insert test users (hash corresponds to password `password123`):
+Insert test users. The following are just the ones i used (hash corresponds to password `password123`):
 ```sql
 INSERT INTO users (name, email, password_hash, role) VALUES
 ('Manager', 'manager@vacation.local', '$2y$10$tdtuNrIyZRsjkl3ujhNyOOluGDznvzvJgTpfZioXaLSemzAqPezZu', 'manager'),
@@ -104,8 +104,6 @@ http://localhost:8000/login.html
 ---
 
 ## Notes
-
- Static files (HTML/CSS/JS) are served automatically.
 
  API routes (e.g., `/api/login`) require running the built-in server with `api.php` router.
 
